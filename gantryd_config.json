@@ -1,0 +1,18 @@
+{
+  "components": [
+    {
+      "name": "node_app",
+      "repo": "hiogawa/gantryd_trial",
+      "tag": "latest",
+      "ports": [
+        {"external": 80, "container": 3000}
+      ],
+      "readyChecks": [
+        { "kind": "http", "port": 3000 }
+      ],
+      "healthChecks": [
+        { "kind": "http", "port": 3000, "path": "/" }
+      ]
+    }
+  ]
+}

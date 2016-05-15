@@ -1,0 +1,18 @@
+---
+- hosts: all
+  user: ubuntu
+  become: yes
+
+  tasks:
+    - name: upload gantryd config file
+      copy:
+        src: gantryd_config.json
+        dest: /home/ubuntu/gantryd_config.json
+
+    - name: run gantry
+      shell: ./gantry.py /home/ubuntu/gantryd_config.json update node_app >> /home/ubuntu/gantryd.log
+      args:
+        executable: /bin/bash
+        chdir: /srv/gantryd
+      async: 1
+      poll: 0

@@ -1,0 +1,25 @@
+---
+- hosts: all
+  user: ubuntu
+  become: yes
+
+  tasks:
+    - name: apt-get update
+      apt: update_cache=yes cache_valid_time=360000
+
+    - name: gantryd | git clone
+      git: repo=https://github.com/DevTable/gantryd.git dest=/srv/gantryd
+           version=02560182e40c24096ddac6026a0a54d5b9bb80b2
+
+    - name: gantryd | install dependencies
+      shell: >
+             (cat requirements.system | xargs apt-get install -y) &&
+             pip install -r requirements.txt
+      args:
+        executable: /bin/bash
+        chdir: /srv/gantryd
+
+  roles:
+    - role: 'hi-ogawa.docker'
+      docker_group:
+        - ubuntu
