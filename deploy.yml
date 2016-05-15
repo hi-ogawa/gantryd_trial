@@ -9,6 +9,9 @@
         src: gantryd_config.json
         dest: /home/ubuntu/gantryd_config.json
 
+    - name: pull new image
+      command: docker pull hiogawa/gantryd_trial
+
     - name: run gantry
       shell: ./gantry.py /home/ubuntu/gantryd_config.json update node_app >> /home/ubuntu/gantryd.log
       args:
